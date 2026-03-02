@@ -4,14 +4,20 @@ const cors = require('cors');
 require('dotenv').config();
 
 const connectDB = require('./config/db');
-const User = require('./models/User');
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 
 const app = express();
 
-// Middleware
+/* ===============================
+   Connect Database
+================================ */
+connectDB().catch(console.error);
+
+/* ===============================
+   Middleware
+================================ */
 app.use(cors());
 app.use(express.json());
 
@@ -26,7 +32,7 @@ const options = {
       version: "1.0.0",
     },
     servers: [
-      { url: `http://localhost:${process.env.PORT || 3000}/api` }
+      { url: "/api" } // مهم جدًا في Vercel
     ],
     components: {
       securitySchemes: {
@@ -60,23 +66,10 @@ app.use('/api/admin', require('./routes/admin'));
    Root Route
 ================================ */
 app.get('/', (req, res) => {
-  res.send('API running...');
+  res.send('API running on Vercel 🚀');
 });
 
-
-
 /* ===============================
-   Start Server
+   Export App (مهم جدا)
 ================================ */
-const startServer = async () => {
-  await connectDB();
-
-
-  const PORT = process.env.PORT || 3000;
-
-  app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-  });
-};
-
-startServer();
+module.exports = app;
