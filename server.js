@@ -68,7 +68,12 @@ app.use('/api/admin', require('./routes/admin'));
 app.get('/', (req, res) => {
   res.send('API running on Vercel 🚀');
 });
-
+app.get('/', (req, res) => {
+  res.json({
+    message: "Server works",
+    mongo: process.env.MONGO_URI ? "exists" : "missing"
+  });
+});
 /* ===============================
    Export App (مهم جدا)
 ================================ */
