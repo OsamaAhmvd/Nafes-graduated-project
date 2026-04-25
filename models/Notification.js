@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 // models/Notification.js
+=======
+>>>>>>> 6bd4bb9 (initial commit)
 const mongoose = require('mongoose');
 
 const NotificationSchema = new mongoose.Schema({

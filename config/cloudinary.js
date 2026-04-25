@@ -6,4 +6,8 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
+<<<<<<< HEAD
 module.exports = cloudinary;
+=======
+module.exports = cloudinary;
+>>>>>>> 6bd4bb9 (initial commit)

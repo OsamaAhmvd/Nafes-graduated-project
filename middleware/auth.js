@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 const auth = async (req, res, next) => {
+<<<<<<< HEAD
   try {
     // 1️⃣ التأكد إن فيه Authorization Header
     const authHeader = req.headers.authorization;
@@ -50,3 +51,25 @@ const auth = async (req, res, next) => {
 };
 
 module.exports = auth;
+=======
+  const header = req.headers.authorization;
+  if (!header || !header.startsWith('Bearer '))
+    return res.status(401).json({ msg: 'Unauthorized: No token provided' });
+
+  const token = header.split(' ')[1];
+
+  try {
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(payload.id).select('-password');
+    if (!user) return res.status(401).json({ msg: 'Unauthorized: User not found' });
+
+    req.user = user;
+    next();
+  } catch (err) {
+    console.error(err);
+    return res.status(401).json({ msg: 'Unauthorized: Invalid token' });
+  }
+};
+
+module.exports = auth;
+>>>>>>> 6bd4bb9 (initial commit)

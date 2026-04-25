@@ -1,6 +1,9 @@
 const ProfessionalCertificate = require('../models/ProfessionalCertificate');
 const Doctor = require('../models/Doctor');
+<<<<<<< HEAD
 const { createNotification } = require('./notificationController');
+=======
+>>>>>>> 6bd4bb9 (initial commit)
 
 exports.uploadCertificate = async (req, res) => {
   try {
@@ -18,9 +21,12 @@ exports.uploadCertificate = async (req, res) => {
       certificateImage: req.file.path
     });
 
+<<<<<<< HEAD
     // 🔔 إنشاء إشعار
     await createNotification(doctor.user, `Your certificate "${title}" has been uploaded successfully.`);
 
+=======
+>>>>>>> 6bd4bb9 (initial commit)
     res.status(201).json({ msg: 'Certificate uploaded', certificate: cert });
   } catch (err) {
     res.status(500).json({ msg: err.message });

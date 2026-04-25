@@ -1,4 +1,3 @@
-// server.js
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
@@ -11,7 +10,7 @@ const swaggerJsdoc = require('swagger-jsdoc');
 const app = express();
 
 /* ===============================
-   Connect Database
+   DB
 ================================ */
 connectDB().catch(console.error);
 
@@ -22,27 +21,16 @@ app.use(cors());
 app.use(express.json());
 
 /* ===============================
-   Swagger Configuration
+   Swagger
 ================================ */
 const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "Nafes Medical Platform API",
+      title: "Nafes API",
       version: "1.0.0",
     },
-    servers: [
-      { url: "/api" } // مهم جدًا في Vercel
-    ],
-    components: {
-      securitySchemes: {
-        bearerAuth: {
-          type: "http",
-          scheme: "bearer",
-          bearerFormat: "JWT"
-        }
-      }
-    }
+    servers: [{ url: "/api" }]
   },
   apis: ["./routes/*.js"],
 };
@@ -63,18 +51,16 @@ app.use('/api/notifications', require('./routes/notifications'));
 app.use('/api/admin', require('./routes/admin'));
 
 /* ===============================
-   Root Route
+   Root
 ================================ */
 app.get('/', (req, res) => {
-  res.send('API running on Vercel 🚀');
-});
-app.get('/', (req, res) => {
   res.json({
-    message: "Server works",
-    mongo: process.env.MONGO_URI ? "exists" : "missing"
+    message: "API running 🚀",
+    mongo: process.env.MONGO_URI ? "connected" : "missing"
   });
 });
+
 /* ===============================
-   Export App (مهم جدا)
+   IMPORTANT (Vercel)
 ================================ */
 module.exports = app;

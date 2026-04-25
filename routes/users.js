@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+<<<<<<< HEAD
 const auth = require('../middleware/auth');
 const { getProfile, uploadDoctorId } = require('../controllers/userController');
 const { uploadIdImages } = require('../middleware/upload');
@@ -54,5 +55,23 @@ router.post('/doctor/upload-id', auth, uploadIdImages.fields([
   { name: 'front', maxCount: 1 },
   { name: 'back', maxCount: 1 }
 ]), uploadDoctorId);
+=======
+
+const auth = require('../middleware/auth');
+const { uploadIdImages } = require('../middleware/upload');
+const { getProfile, uploadDoctorId } = require('../controllers/userController');
+
+router.get('/me', auth, getProfile);
+
+router.post(
+  '/doctor/upload-id',
+  auth,
+  uploadIdImages.fields([
+    { name: 'front', maxCount: 1 },
+    { name: 'back', maxCount: 1 }
+  ]),
+  uploadDoctorId
+);
+>>>>>>> 6bd4bb9 (initial commit)
 
 module.exports = router;

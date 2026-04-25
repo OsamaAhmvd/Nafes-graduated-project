@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+<<<<<<< HEAD
 const certificateController = require('../controllers/certificateController');
 const auth = require('../middleware/auth');
 const { certificateUpload } = require('../middleware/upload');
@@ -43,5 +44,18 @@ const { certificateUpload } = require('../middleware/upload');
  *         description: Certificate uploaded
  */
 router.post('/upload', auth, certificateUpload.single('certificateImage'), certificateController.uploadCertificate);
+=======
+
+const auth = require('../middleware/auth');
+const { certificateUpload } = require('../middleware/upload');
+const certificateController = require('../controllers/certificateController');
+
+router.post(
+  '/upload',
+  auth,
+  certificateUpload.single('certificateImage'),
+  certificateController.uploadCertificate
+);
+>>>>>>> 6bd4bb9 (initial commit)
 
 module.exports = router;

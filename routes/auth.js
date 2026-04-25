@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+<<<<<<< HEAD
 const { register, login } = require('../controllers/authController');
 
 /**
@@ -78,6 +79,12 @@ router.post('/register', register);
  *       401:
  *         description: Invalid credentials
  */
+=======
+
+const { register, login } = require('../controllers/authController');
+
+router.post('/register', register);
+>>>>>>> 6bd4bb9 (initial commit)
 router.post('/login', login);
 
 module.exports = router;

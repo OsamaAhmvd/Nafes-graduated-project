@@ -5,7 +5,11 @@ const ProfessionalCertificateSchema = new mongoose.Schema({
   title: { type: String, required: true },
   issuingAuthority: { type: String, required: true },
   issueDate: { type: Date, required: true },
+<<<<<<< HEAD
   certificateImage: { type: String, required: false },
+=======
+  certificateImage: { type: String, required: true },
+>>>>>>> 6bd4bb9 (initial commit)
   verificationStatus: { type: String, enum: ['pending', 'approved', 'rejected'], default: 'pending' }
 }, { timestamps: true });
 

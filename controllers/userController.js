@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const Doctor = require('../models/Doctor');
 const { uploadToCloudinary } = require('../middleware/upload');
 const Notification = require('../models/Notification');
@@ -13,6 +14,17 @@ exports.getProfile = async (req, res) => {
 };
 
 // 🪪 رفع هوية الدكتور
+=======
+const { uploadToCloudinary } = require('../middleware/upload');
+const Doctor = require('../models/Doctor');
+
+// 👤 عرض البروفايل
+exports.getProfile = async (req, res) => {
+  res.status(200).json({ user: req.user });
+};
+
+// 🪪 رفع الهوية
+>>>>>>> 6bd4bb9 (initial commit)
 exports.uploadDoctorId = async (req, res) => {
   try {
     if (req.user.personType !== 'doctor')
@@ -42,12 +54,15 @@ exports.uploadDoctorId = async (req, res) => {
     doctor.imageVerificationStatus = 'pending';
     await doctor.save();
 
+<<<<<<< HEAD
     // 🔔 إنشاء إشعار
     await Notification.create({
       user: req.user._id,
       message: 'Your ID has been uploaded successfully and is pending verification.'
     });
 
+=======
+>>>>>>> 6bd4bb9 (initial commit)
     res.status(200).json({ msg: 'ID uploaded successfully', doctor });
 
   } catch (err) {

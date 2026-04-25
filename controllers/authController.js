@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const Doctor = require('../models/Doctor');
@@ -138,3 +139,45 @@ module.exports = {
   register,
   login
 };
+=======
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const User = require('../models/User');
+
+const generateToken = (user) => jwt.sign(
+  { id: user._id, email: user.email, personType: user.personType },
+  process.env.JWT_SECRET,
+  { expiresIn: process.env.JWT_EXPIRES_IN || '1d' }
+);
+
+exports.register = async (req, res) => {
+  try {
+    const { name, email, password, personType } = req.body;
+    if (!name || !email || !password) return res.status(400).json({ msg: 'Please provide name, email, password' });
+
+    if (await User.findOne({ email })) return res.status(400).json({ msg: 'Email already in use' });
+
+    const hashed = await bcrypt.hash(password, 10);
+    const user = await User.create({ name, email, password: hashed, personType });
+    const token = generateToken(user);
+    res.status(201).json({ user: { id: user._id, name: user.name, email: user.email }, token });
+  } catch (err) {
+    res.status(500).json({ msg: err.message });
+  }
+};
+
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) return res.status(400).json({ msg: 'Please provide email and password' });
+
+    const user = await User.findOne({ email });
+    if (!user || !(await bcrypt.compare(password, user.password))) return res.status(400).json({ msg: 'Wrong email or password' });
+
+    const token = generateToken(user);
+    res.json({ token, user: { id: user._id, name: user.name, personType: user.personType } });
+  } catch (err) {
+    res.status(500).json({ msg: err.message });
+  }
+};
+>>>>>>> 6bd4bb9 (initial commit)
